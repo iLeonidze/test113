@@ -6,10 +6,18 @@ on:
 jobs:
   pypi-build:
     name: Build and push python package to PyPi
-    runs-on: python-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+      - name: Initialize Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip install -r requirements.py
       - name: Build python package
         run: python3 setup.py bdist
       - name: Publish a Python distribution to PyPI
