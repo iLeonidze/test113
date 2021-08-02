@@ -6,10 +6,12 @@ on:
 jobs:
   pypi-build:
     name: Build and push python package to PyPi
-    runs-on: ubuntu-latest
+    runs-on: python-latest
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+      - name: Build python package
+        run: python3 setup.py bdist
       - name: Publish a Python distribution to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
@@ -21,7 +23,7 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
-      - name: Push to Docker Hub
+      - name: Build and push to Docker Hub
         uses: docker/build-push-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
